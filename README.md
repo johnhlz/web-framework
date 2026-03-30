@@ -142,6 +142,13 @@ gcc -O2 -Wall -Wextra -std=c11 test_main.c sensor_uploader.c -o test_uploader -l
 ./test_uploader
 ```
 
+## 常见问题
+### 如何传入文件夹（批量上传）
+当前接口只接收单条数据，不直接接收文件夹。若要上传文件夹里的数据，请在你的主程序中传入文件夹路径并自行遍历文件，然后逐条调用上传接口即可。常见流程如下：
+1. 在主程序通过命令行参数获取文件夹路径，例如 `./app /path/to/folder`
+2. 遍历文件夹内的文件（如 CSV），读取内容并组装为 `SensorUploadInput`
+3. 对每个文件调用 `sensor_upload_post(...)` 或直接调用 `POST /api/sensor/upload`
+
 ## 说明
 - 后端 Python 依赖维护在 `requirements.txt`。
 - 前端依赖维护在 `frontend/package.json`。
